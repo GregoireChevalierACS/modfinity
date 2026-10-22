@@ -3,4 +3,17 @@ commit-msg:
     commitlint:
       run: npx --no -- commitlint --edit {1}
 
-# pre-commit lint/test hooks are added with tools/pdx-lint (step 3).
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      glob: '*.{js,ts}'
+      run: npx --no -- eslint {staged_files}
+    pdx-lint:
+      glob: 'mods/**'
+      run: npm run lint:mods
+
+pre-push:
+  commands:
+    verify:
+      run: npm run verify
