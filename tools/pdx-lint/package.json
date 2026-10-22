@@ -1,0 +1,16 @@
+{
+  "name": "pdx-lint",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static validation of Europa Universalis V mod files",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "pdx-lint": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  }
+}
