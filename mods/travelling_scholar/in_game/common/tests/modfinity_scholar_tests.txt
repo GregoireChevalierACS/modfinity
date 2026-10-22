@@ -1,0 +1,26 @@
+﻿# The scholar must reach every kind of government, not only monarchies.
+modfinity_scholar_visits_every_government_test = {
+	year = 1338
+	success = {
+		any_country = {
+			has_variable = modfinity_scholar_visited
+			government_type = government_type:monarchy
+		}
+		any_country = {
+			has_variable = modfinity_scholar_visited
+			government_type = government_type:republic
+		}
+		any_country = {
+			has_variable = modfinity_scholar_visited
+			government_type = government_type:theocracy
+		}
+	}
+	end_year = 1360
+	fail_on_end_year = yes
+	success_effect = {
+		test_log = { name = modfinity_scholar_visits_every_government_test text = "PASS: visited a monarchy, a republic and a theocracy" }
+	}
+	failure_effect = {
+		test_log = { name = modfinity_scholar_visits_every_government_test text = "FAIL: some government type was never visited" }
+	}
+}
