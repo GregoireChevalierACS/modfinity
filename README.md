@@ -28,8 +28,10 @@ Commit headers follow the format below, enforced by commitlint:
 
 ```
 YYYY-MM-DD # N : (category) description
-2026-10-22 # 1 : (chore) add gitignore and editorconfig
+2026-10-22 # 1 : (chore) ajoute gitignore et editorconfig
 ```
+
+Descriptions are written in French.
 
 - `N`: the commit's number within the day, starting at 1.
 - `category`: `feat`, `fix`, `refactor`, `perf`, `test`, `docs`, `style`, `build`, `ci`, `chore`, `revert`.
