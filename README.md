@@ -45,6 +45,21 @@ powershell -ExecutionPolicy Bypass -File .\scripts\link-mod.ps1 -ModName travell
 | `missing-localization` | Every event text exists in each required language |
 | `localization-root-scope` | Country data is read through `ROOT.GetCountry` |
 | `forbidden-effects` | Per-mod banned effects (e.g. government-specific ones) |
+| `unknown-keywords` | Every effect and trigger exists in the game or is scripted in the mod (local only, see below) |
+
+`unknown-keywords` relies on the documentation the game generates with the `script_docs` console command
+(`Documents\Paradox Interactive\Europa Universalis V\docs`) and on the vanilla scripted definitions of the
+installed game. That data belongs to Paradox and is not committed: without it (e.g. in CI) the rule is skipped with a note.
+Override the default locations with `--docs <dir>` and `--game <dir>`.
+
+### Game error log
+
+`error.log` is full of vanilla noise. Compare it with a baseline instead of reading it:
+
+```powershell
+npm run baseline     # after a session WITHOUT mods: saves baselines/error-log-<version>.txt
+npm run compare-log  # after a session WITH mods: lists only the messages missing from the baseline
+```
 
 It follows a hexagonal architecture, enforced by ESLint: `domain` (parsers, rules) has no dependency;
 `application` (use case) only depends on `domain` and `ports`; `adapters` (file system, JSON config, console) implement the ports;
