@@ -1,0 +1,17 @@
+# Normalize line endings in the repository
+* text=auto eol=lf
+
+# Paradox script & localization
+*.txt text eol=lf
+*.yml text eol=lf
+*.gui text eol=lf
+*.json text eol=lf
+
+# Binary assets
+*.dds binary
+*.png binary
+*.tga binary
+*.mesh binary
+*.anim binary
+*.ogg binary
+*.wav binary

@@ -1,0 +1,23 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Paradox script files: tabs, like vanilla
+[mods/**/*.{txt,gui}]
+indent_style = tab
+indent_size = 4
+
+# Paradox localization: UTF-8 with BOM is mandatory
+[mods/**/localization/**/*.yml]
+charset = utf-8-bom
+indent_style = space
+indent_size = 1
+
+[*.md]
+trim_trailing_whitespace = false
