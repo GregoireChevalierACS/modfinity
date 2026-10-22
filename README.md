@@ -21,8 +21,34 @@ scripts/   local helper scripts (linking mods into the game's mod folder…)
 Requirements: Node.js ≥ 22, Git, Europa Universalis V.
 
 ```powershell
-npm install   # installs dev tooling and git hooks
+npm install        # installs dev tooling and git hooks
+npm run verify     # lint + typecheck + unit tests + pdx-lint on every mod (also run by CI and pre-push)
+npm run lint:mods  # pdx-lint only
 ```
+
+Link a mod into the game's local mod folder (directory junction, no admin rights):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\link-mod.ps1 -ModName travelling_scholar
+```
+
+### pdx-lint
+
+[`tools/pdx-lint`](tools/pdx-lint) statically checks mod files, configured by [`pdx-lint.config.json`](pdx-lint.config.json):
+
+| Rule | Checks |
+|---|---|
+| `syntax` | Well-formed script (braces, operators, strings) and localization files |
+| `utf8-bom` | Script and localization files are UTF-8 with BOM |
+| `localization-language` | Folder, `_l_<lang>.yml` suffix and `l_<lang>:` header agree |
+| `event-ids` | Declared namespace, number in 1..9999, unique ids |
+| `missing-localization` | Every event text exists in each required language |
+| `localization-root-scope` | Country data is read through `ROOT.GetCountry` |
+| `forbidden-effects` | Per-mod banned effects (e.g. government-specific ones) |
+
+It follows a hexagonal architecture, enforced by ESLint: `domain` (parsers, rules) has no dependency;
+`application` (use case) only depends on `domain` and `ports`; `adapters` (file system, JSON config, console) implement the ports;
+`cli.ts` wires everything together.
 
 Commit headers follow the format below, enforced by commitlint:
 
