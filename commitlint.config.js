@@ -18,14 +18,15 @@ export default {
           /^\d{4}-\d{2}-\d{2} # \d+ : \(\w+\) .+$/.test(header ?? ''),
           'header must match "YYYY-MM-DD # N : (category) description"',
         ],
+        // Date and number rules only apply once the header format is valid (reported by header-format).
         'date-valid': ({ date }) => {
+          if (date == null) return [true];
           const parsed = new Date(`${date}T00:00:00Z`);
-          const isValid =
-            !Number.isNaN(parsed.getTime()) && parsed.toISOString().startsWith(date ?? '');
+          const isValid = !Number.isNaN(parsed.getTime()) && parsed.toISOString().startsWith(date);
           return [isValid, `"${date}" is not a valid calendar date`];
         },
         'number-positive': ({ number }) => [
-          Number(number) >= 1,
+          number == null || Number(number) >= 1,
           'commit number of the day must start at 1',
         ],
       },
