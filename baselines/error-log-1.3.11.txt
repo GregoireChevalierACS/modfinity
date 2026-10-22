@@ -1,0 +1,20 @@
+[country_database.cpp:107]: The following two countries have the same name 'BBD' & 'BRA' = 'Brandebourg'
+[country_database.cpp:107]: The following two countries have the same name 'BMS' & 'MEI' = 'Misnie'
+[country_database.cpp:107]: The following two countries have the same name 'BRM' & 'BRE' = 'Brême'
+[country_database.cpp:107]: The following two countries have the same name 'KHK' & 'CHK' = 'Cahokia'
+[country_database.cpp:107]: The following two countries have the same name 'SFC' & 'ALS' = 'Strasbourg'
+[country_database.cpp:107]: The following two countries have the same name 'SYE' & 'SPY' = 'Spire'
+[country_database.cpp:107]: The following two countries have the same name 'TLP' & 'TAA' = 'Tlalpan'
+[pdx_arena_allocator.cpp:213]: Arena AudioArena size is too small. Please increase.
+[pdx_data_factory.cpp:1042]: Failed converting statement for 'Multiply_CFixedPoint(RawGoodLocationItem.GetProfit, Location.GetMaxRGOWorkers)'
+[pdx_data_factory.cpp:1063]: Failed to convert statement for argument '0' for call 'Multiply_CFixedPoint' in 'Multiply_CFixedPoint(RawGoodLocationItem.GetProfit, Location.GetMaxRGOWorkers)'
+[pdx_data_factory.cpp:1424]: Could not find data system function 'GetProfit' in 'RawGoodLocationItem.GetProfit'.
+[pdx_gui_data_model.cpp:100]: Trying to reshape data model with negative count -1
+[pdx_gui_factory.cpp:289]: failed reading property, at gui/expand_raw_goods_lateralview.gui:986
+[pdx_gui_localize.cpp:182]: Unlocalized text 'MOD_BACKEND_NOT_AVAILABLE_STEAM' at gui/mod_tools.gui:105, either localize it or use the raw_text property instead of text
+[pdx_gui_localize.cpp:182]: Unlocalized text 'MUSIC_PLAYER_CURRENT_TRACK' at gui/music_player_lateralview.gui:56, either localize it or use the raw_text property instead of text
+[pdx_gui_localize.cpp:182]: Unlocalized text 'MUSIC_PLAYER_OPEN_SETTINGS' at gui/music_player_lateralview.gui:46, either localize it or use the raw_text property instead of text
+[pdx_gui_localize.cpp:182]: Unlocalized text 'OPEN_MUSIC_PLAYER' at gui/panels/right_panel/right_panel.gui:461, either localize it or use the raw_text property instead of text
+[pdx_gui_localize.cpp:302]: gui/expand_raw_goods_lateralview.gui:986 - Failed parsing localized text: PROFIT_EXPAND_RGO_TOOLTIP_TITLE_TEXT
+[pdxinput_context.cpp:2896]: Could not push the provided stack context. ID: 0
+[tooltips_utils.h:85]: Error building from string ( TYPE = NCoatOfArms::SCoatOfArmsSpriteWrapper, HASH = 1806157250 ).
