@@ -1,0 +1,4 @@
+﻿l_english:
+ modfinity_scholar_debug.1.title: "Travelling Scholar: smoke test"
+ modfinity_scholar_debug.1.desc: "If you can read this, the Travelling Scholar mod is loaded for [ROOT.GetCountry.GetName]."
+ modfinity_scholar_debug.1.a: "Good."

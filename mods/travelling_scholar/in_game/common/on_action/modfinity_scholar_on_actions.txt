@@ -1,0 +1,13 @@
+﻿# Only an on_actions block may be appended to a vanilla on_action:
+# the mod's logic lives in its own, prefixed on_actions.
+monthly_country_pulse = {
+	on_actions = {
+		modfinity_scholar_debug_monthly_pulse
+	}
+}
+
+modfinity_scholar_debug_monthly_pulse = {
+	events = {
+		modfinity_scholar_debug.1
+	}
+}

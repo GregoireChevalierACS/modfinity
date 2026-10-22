@@ -1,0 +1,4 @@
+﻿l_french:
+ modfinity_scholar_debug.1.title: "Érudit de passage : test de fumée"
+ modfinity_scholar_debug.1.desc: "Si vous lisez ceci, le mod Érudit de passage est chargé pour [ROOT.GetCountry.GetName]."
+ modfinity_scholar_debug.1.a: "Parfait."
