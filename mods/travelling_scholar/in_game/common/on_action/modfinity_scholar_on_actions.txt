@@ -1,8 +1,22 @@
 ﻿# Only an on_actions block may be appended to a vanilla on_action:
 # the mod's logic lives in its own, prefixed on_actions.
+on_game_start = {
+	on_actions = {
+		modfinity_scholar_game_start
+	}
+}
+
 yearly_country_pulse = {
 	on_actions = {
 		modfinity_scholar_yearly_pulse
+	}
+}
+
+modfinity_scholar_game_start = {
+	effect = {
+		every_country = {
+			modfinity_scholar_start_initial_cooldown_effect = yes
+		}
 	}
 }
 
