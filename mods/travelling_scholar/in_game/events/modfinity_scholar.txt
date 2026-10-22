@@ -1,0 +1,73 @@
+﻿namespace = modfinity_scholar
+
+# A travelling scholar offers their services. Valid for every government type:
+# the praise option uses add_government_power, which targets legitimacy, republican tradition,
+# devotion, horde unity or tribal cohesion depending on the government.
+modfinity_scholar.1 = {
+	type = country_event
+	title = modfinity_scholar.1.title
+	desc = modfinity_scholar.1.desc
+	outcome = neutral
+	illustration_tags = {
+		10 = regular
+		10 = interior
+	}
+
+	trigger = {
+		modfinity_scholar_can_visit = yes
+	}
+
+	immediate = {
+		modfinity_scholar_record_visit_effect = yes
+		event_illustration_poptype_effect = { foreground = pop_type:clergy background = pop_type:burghers }
+	}
+
+	# Fund their research
+	option = {
+		name = modfinity_scholar.1.a
+		trigger = { modfinity_scholar_can_afford_funding = yes }
+		add_gold = {
+			value = modfinity_scholar_funding_cost
+			multiply = -1
+		}
+		add_research_progress = research_progress_mild_bonus
+		ai_will_select = {
+			value = 10
+			if = {
+				limit = {
+					gold >= {
+						value = modfinity_scholar_funding_cost
+						multiply = 3
+					}
+				}
+				add = 40
+			}
+		}
+	}
+
+	# Commission praise of our rulers
+	option = {
+		name = modfinity_scholar.1.b
+		trigger = { modfinity_scholar_can_afford_praise = yes }
+		add_gold = {
+			value = modfinity_scholar_praise_cost
+			multiply = -1
+		}
+		add_government_power = government_power_mild_bonus
+		ai_will_select = {
+			value = 10
+			if = {
+				limit = { government_power < 50 }
+				add = 40
+			}
+		}
+	}
+
+	# Send them away politely
+	option = {
+		name = modfinity_scholar.1.c
+		ai_will_select = {
+			value = 20
+		}
+	}
+}

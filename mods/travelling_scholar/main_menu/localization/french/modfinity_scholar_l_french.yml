@@ -1,4 +1,6 @@
 ﻿l_french:
- modfinity_scholar_debug.1.title: "Érudit de passage : test de fumée"
- modfinity_scholar_debug.1.desc: "Si vous lisez ceci, le mod Érudit de passage est chargé pour [ROOT.GetCountry.GetName]."
- modfinity_scholar_debug.1.a: "Parfait."
+ modfinity_scholar.1.title: "Un érudit de passage"
+ modfinity_scholar.1.desc: "Un savant voyageur vient d'arriver sur nos terres. Géographe, médecin ou astronome selon qui l'on interroge, il a parcouru bien des contrées et offre son savoir à qui voudra soutenir ses travaux. Nos conseillers sont partagés : certains y voient une chance, d'autres une coûteuse curiosité."
+ modfinity_scholar.1.a: "Financer ses travaux."
+ modfinity_scholar.1.b: "Qu'il chante les louanges de nos dirigeants."
+ modfinity_scholar.1.c: "Le remercier et le laisser poursuivre sa route."
