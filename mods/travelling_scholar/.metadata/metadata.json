@@ -1,0 +1,10 @@
+{
+  "name": "Travelling Scholar",
+  "id": "modfinity_travelling_scholar",
+  "version": "0.1.0",
+  "supported_game_version": "1.3.*",
+  "short_description": "A travelling scholar visits your country, whatever its government: fund their research, commission praise of your rulers, or send them away.",
+  "tags": ["Events"],
+  "relationships": [],
+  "game_custom_data": {}
+}
