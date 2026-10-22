@@ -1,12 +1,21 @@
 import { readFile } from 'node:fs/promises';
 
+import type { SaveCheck } from '../domain/save/save-check.js';
 import type { ConfigRepository, LintConfig, ModLintConfig } from '../ports/config-repository.js';
 
 export const DEFAULT_CONFIG: LintConfig = { requiredLanguages: ['english'], mods: {} };
 
 /**
  * Reads a JSON file shaped like:
- * { "requiredLanguages": ["english"], "mods": { "<mod>": { "forbiddenEffects": ["add_legitimacy"] } } }
+ * {
+ *   "requiredLanguages": ["english"],
+ *   "mods": {
+ *     "<mod>": {
+ *       "forbiddenEffects": ["add_legitimacy"],
+ *       "saveChecks": [{ "variable": "my_flag", "requiredGovernments": ["monarchy"] }]
+ *     }
+ *   }
+ * }
  * A missing file means the default configuration.
  */
 export class JsonConfigRepository implements ConfigRepository {
@@ -34,14 +43,30 @@ function parseConfig(value: unknown, source: string): LintConfig {
 
   const mods: Record<string, ModLintConfig> = {};
   for (const [modName, modConfig] of Object.entries(rawMods)) {
-    const forbiddenEffects = isRecord(modConfig) ? (modConfig.forbiddenEffects ?? []) : undefined;
-    if (!isStringArray(forbiddenEffects)) {
-      throw new Error(`${source}: 'mods.${modName}.forbiddenEffects' must be a string array`);
-    }
-    mods[modName] = { forbiddenEffects };
+    if (!isRecord(modConfig)) throw new Error(`${source}: 'mods.${modName}' must be an object`);
+    mods[modName] = {
+      forbiddenEffects: parseForbiddenEffects(modConfig.forbiddenEffects ?? [], `${source}: 'mods.${modName}'`),
+      saveChecks: parseSaveChecks(modConfig.saveChecks ?? [], `${source}: 'mods.${modName}'`),
+    };
   }
 
   return { requiredLanguages, mods };
+}
+
+function parseForbiddenEffects(value: unknown, context: string): string[] {
+  if (!isStringArray(value)) throw new Error(`${context}.forbiddenEffects must be a string array`);
+  return value;
+}
+
+function parseSaveChecks(value: unknown, context: string): SaveCheck[] {
+  if (!Array.isArray(value)) throw new Error(`${context}.saveChecks must be an array`);
+  return value.map((check: unknown, index): SaveCheck => {
+    const where = `${context}.saveChecks[${index}]`;
+    if (!isRecord(check) || typeof check.variable !== 'string' || !isStringArray(check.requiredGovernments)) {
+      throw new Error(`${where} must have a 'variable' string and a 'requiredGovernments' string array`);
+    }
+    return { variable: check.variable, requiredGovernments: check.requiredGovernments };
+  });
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

@@ -115,7 +115,7 @@ describe('LintModsUseCase', () => {
   it('applies the per-mod configuration only to that mod', async () => {
     const config: LintConfig = {
       requiredLanguages: ['english'],
-      mods: { generic: { forbiddenEffects: ['add_legitimacy'] } },
+      mods: { generic: { forbiddenEffects: ['add_legitimacy'], saveChecks: [] } },
     };
     const otherModUsingLegitimacy: Mod = { ...modUsingLegitimacy, name: 'other' };
     const { useCase } = setup([modUsingLegitimacy, otherModUsingLegitimacy], config);

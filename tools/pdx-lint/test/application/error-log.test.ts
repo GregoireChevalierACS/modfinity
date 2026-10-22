@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 import { CompareErrorLogUseCase, SaveBaselineUseCase } from '../../src/application/error-log.js';
+import type { Mod } from '../../src/domain/mod.js';
 import type { BaselineRepository, GameLogs } from '../../src/ports/game-logs.js';
+import type { ModRepository } from '../../src/ports/mod-repository.js';
+import { modFile } from '../helpers.js';
 
 class FakeGameLogs implements GameLogs {
   constructor(
@@ -32,6 +35,21 @@ class InMemoryBaselineRepository implements BaselineRepository {
   }
 }
 
+class InMemoryModRepository implements ModRepository {
+  constructor(private readonly mods: readonly Mod[]) {}
+
+  listModNames(): Promise<string[]> {
+    return Promise.resolve(this.mods.map((mod) => mod.name));
+  }
+
+  load(modName: string): Promise<Mod> {
+    const mod = this.mods.find((candidate) => candidate.name === modName);
+    return mod === undefined ? Promise.reject(new Error(modName)) : Promise.resolve(mod);
+  }
+}
+
+const scholarMod: Mod = { name: 'travelling_scholar', files: [modFile('in_game/events/modfinity_scholar.txt', '')] };
+
 describe('SaveBaselineUseCase', () => {
   it('saves the distinct messages of the last session under the game version', async () => {
     const baselines = new InMemoryBaselineRepository();
@@ -44,21 +62,31 @@ describe('SaveBaselineUseCase', () => {
 });
 
 describe('CompareErrorLogUseCase', () => {
-  it('reports the messages that the baseline does not explain', async () => {
+  it('reports new messages, grouped by mod when they mention one', async () => {
     const baselines = new InMemoryBaselineRepository();
     await baselines.save('1.3.11', ['vanilla']);
+    const log = 'vanilla\nScript location: events/modfinity_scholar.txt:3\nnew vanilla noise\n';
+    const useCase = new CompareErrorLogUseCase(new FakeGameLogs(log), baselines, new InMemoryModRepository([scholarMod]));
 
-    const report = await new CompareErrorLogUseCase(new FakeGameLogs('vanilla\nmod error\n'), baselines).execute();
-
-    expect(report).toEqual({
+    expect(await useCase.execute()).toEqual({
       gameVersion: '1.3.11',
-      totalLines: 2,
-      newErrors: [{ message: 'mod error', occurrences: 1 }],
+      totalLines: 3,
+      byMod: [
+        {
+          modName: 'travelling_scholar',
+          errors: [{ message: 'Script location: events/modfinity_scholar.txt:3', occurrences: 1 }],
+        },
+      ],
+      unattributed: [{ message: 'new vanilla noise', occurrences: 1 }],
     });
   });
 
   it('fails with guidance when no baseline exists for the game version', async () => {
-    const useCase = new CompareErrorLogUseCase(new FakeGameLogs('x', '1.4.0'), new InMemoryBaselineRepository());
+    const useCase = new CompareErrorLogUseCase(
+      new FakeGameLogs('x', '1.4.0'),
+      new InMemoryBaselineRepository(),
+      new InMemoryModRepository([]),
+    );
 
     await expect(useCase.execute()).rejects.toThrow('no baseline for game version 1.4.0');
   });
