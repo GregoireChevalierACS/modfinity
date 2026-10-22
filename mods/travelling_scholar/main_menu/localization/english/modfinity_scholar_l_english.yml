@@ -1,6 +1,7 @@
 ﻿l_english:
  modfinity_scholar.1.title: "A Travelling Scholar"
  modfinity_scholar.1.desc: "A learned traveller has arrived in our lands. Geographer, physician or astronomer depending on whom you ask, they have crossed many countries and offer their knowledge to whoever will support their work. Our advisors are divided: some see an opportunity, others an expensive curiosity."
+ modfinity_scholar.1.desc.return: "A learned traveller has returned to our lands. Word of our past hospitality has spread among scholars, and they once again offer their knowledge to whoever will support their work. Our advisors are divided: some see an opportunity, others an expensive curiosity."
  modfinity_scholar.1.a: "Fund their research."
  modfinity_scholar.1.b: "Let them sing the praises of our rulers."
  modfinity_scholar.1.c: "Thank them and send them on their way."

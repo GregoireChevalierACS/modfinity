@@ -1,10 +1,22 @@
 ﻿# Country scope.
 
-# Starts the cooldown (20 years) and remembers that a scholar came (read by `pdx-lint check-save`).
-modfinity_scholar_record_visit_effect = {
+# No new visit for 20 years.
+modfinity_scholar_start_cooldown_effect = {
 	set_variable = {
 		name = modfinity_scholar_cooldown
 		days = 7300
 	}
+}
+
+# At game start, spreads first visits over the first 20 years instead of all in the first few.
+modfinity_scholar_start_initial_cooldown_effect = {
+	set_variable = {
+		name = modfinity_scholar_cooldown
+		days = { 0 7300 }
+	}
+}
+
+# Remembers that a scholar came: later visits get another description (also read by `pdx-lint check-save`).
+modfinity_scholar_remember_visit_effect = {
 	set_variable = modfinity_scholar_visited
 }

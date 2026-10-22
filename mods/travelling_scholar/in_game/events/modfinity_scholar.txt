@@ -6,7 +6,17 @@
 modfinity_scholar.1 = {
 	type = country_event
 	title = modfinity_scholar.1.title
-	desc = modfinity_scholar.1.desc
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { has_variable = modfinity_scholar_visited }
+				desc = modfinity_scholar.1.desc.return
+			}
+			triggered_desc = {
+				desc = modfinity_scholar.1.desc
+			}
+		}
+	}
 	outcome = neutral
 	illustration_tags = {
 		10 = regular
@@ -18,8 +28,13 @@ modfinity_scholar.1 = {
 	}
 
 	immediate = {
-		modfinity_scholar_record_visit_effect = yes
+		modfinity_scholar_start_cooldown_effect = yes
 		event_illustration_poptype_effect = { foreground = pop_type:clergy background = pop_type:burghers }
+	}
+
+	# After the description is shown, so that only later visits read "returns".
+	after = {
+		modfinity_scholar_remember_visit_effect = yes
 	}
 
 	# Fund their research
