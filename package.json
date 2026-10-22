@@ -1,0 +1,21 @@
+{
+  "name": "modfinity",
+  "private": true,
+  "description": "Europa Universalis V mods and their tooling",
+  "license": "MIT",
+  "author": "Gregoire Chevalier",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "tools/*"
+  ],
+  "scripts": {
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "lefthook": "^1.11.13"
+  }
+}
