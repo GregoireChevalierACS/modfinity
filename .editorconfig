@@ -8,8 +8,9 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
 
-# Paradox script files: tabs, like vanilla
+# Paradox script files: tabs and UTF-8 with BOM, like vanilla
 [mods/**/*.{txt,gui}]
+charset = utf-8-bom
 indent_style = tab
 indent_size = 4
 
