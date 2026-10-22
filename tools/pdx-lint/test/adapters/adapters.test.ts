@@ -75,6 +75,19 @@ describe('JsonConfigRepository', () => {
 });
 
 describe('ConsoleReporter', () => {
+  it('prints notes before the diagnostics', () => {
+    const lines: string[] = [];
+
+    new ConsoleReporter('mods', (line) => lines.push(line)).report({
+      results: [],
+      errorCount: 0,
+      warningCount: 0,
+      notes: ['rule skipped'],
+    });
+
+    expect(lines).toEqual(['note: rule skipped', 'pdx-lint: 0 mod(s) checked, 0 error(s), 0 warning(s).']);
+  });
+
   it('prints one line per diagnostic and a summary', () => {
     const lines: string[] = [];
     const reporter = new ConsoleReporter('mods', (line) => lines.push(line));
@@ -91,6 +104,7 @@ describe('ConsoleReporter', () => {
       ],
       errorCount: 2,
       warningCount: 0,
+      notes: [],
     });
 
     expect(lines).toEqual([

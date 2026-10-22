@@ -9,7 +9,10 @@ export class ConsoleReporter implements Reporter {
     },
   ) {}
 
-  report({ results, errorCount, warningCount }: LintReport): void {
+  report({ results, errorCount, warningCount, notes }: LintReport): void {
+    notes.forEach((note) => {
+      this.write(`note: ${note}`);
+    });
     for (const { modName, diagnostics } of results) {
       for (const diagnostic of diagnostics) {
         const location = `${this.modsRootLabel}/${modName}/${diagnostic.filePath}${diagnostic.line === undefined ? '' : `:${diagnostic.line}`}`;

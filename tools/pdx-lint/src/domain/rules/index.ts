@@ -1,3 +1,4 @@
+import type { ScriptKnowledge } from '../knowledge/script-knowledge.js';
 import { eventIdsRule } from './event-ids.js';
 import { forbiddenEffectsRule } from './forbidden-effects.js';
 import { localizationLanguageRule } from './localization-language.js';
@@ -5,11 +6,14 @@ import { localizationRootScopeRule } from './localization-root-scope.js';
 import { missingLocalizationRule } from './missing-localization.js';
 import type { Rule } from './rule.js';
 import { syntaxRule } from './syntax.js';
+import { unknownKeywordsRule } from './unknown-keywords.js';
 import { utf8BomRule } from './utf8-bom.js';
 
 export interface RuleOptions {
   readonly requiredLanguages: readonly string[];
   readonly forbiddenEffects: readonly string[];
+  /** Enables the unknown-keywords rule when the game documentation is available. */
+  readonly knowledge: ScriptKnowledge | null;
 }
 
 export function createRules(options: RuleOptions): Rule[] {
@@ -21,6 +25,7 @@ export function createRules(options: RuleOptions): Rule[] {
     missingLocalizationRule(options.requiredLanguages),
     localizationRootScopeRule,
     forbiddenEffectsRule(options.forbiddenEffects),
+    ...(options.knowledge === null ? [] : [unknownKeywordsRule(options.knowledge)]),
   ];
 }
 
