@@ -9,6 +9,8 @@ export interface LintReport {
   readonly results: readonly ModLintResult[];
   readonly errorCount: number;
   readonly warningCount: number;
+  /** Informational messages, e.g. a rule skipped because its data is missing. */
+  readonly notes: readonly string[];
 }
 
 export interface Reporter {

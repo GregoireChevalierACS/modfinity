@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import { LintModsUseCase } from '../../src/application/lint-mods.js';
 import type { Mod } from '../../src/domain/mod.js';
+import type { ScriptKnowledge } from '../../src/domain/knowledge/script-knowledge.js';
 import type { ConfigRepository, LintConfig } from '../../src/ports/config-repository.js';
+import type { KnowledgeRepository } from '../../src/ports/knowledge-repository.js';
 import type { ModRepository } from '../../src/ports/mod-repository.js';
 import type { LintReport, Reporter } from '../../src/ports/reporter.js';
 import { ENGLISH_EVENT_LOC, modFile, VALID_EVENT } from '../helpers.js';
@@ -28,6 +30,24 @@ class FixedConfigRepository implements ConfigRepository {
   }
 }
 
+class FixedKnowledgeRepository implements KnowledgeRepository {
+  constructor(private readonly knowledge: ScriptKnowledge | null) {}
+
+  load(): Promise<ScriptKnowledge | null> {
+    return Promise.resolve(this.knowledge);
+  }
+}
+
+const EMPTY_KNOWLEDGE: ScriptKnowledge = {
+  effects: new Set(),
+  triggers: new Set(),
+  links: new Set(),
+  scriptedEffects: new Set(),
+  scriptedTriggers: new Set(),
+  scriptValues: new Set(),
+  scriptedLists: new Set(),
+};
+
 class RecordingReporter implements Reporter {
   readonly reports: LintReport[] = [];
 
@@ -49,20 +69,47 @@ const modUsingLegitimacy: Mod = {
   files: [modFile('in_game/common/scripted_effects/effects.txt', 'my_effect = { add_legitimacy = 5 }')],
 };
 
-function setup(mods: readonly Mod[], config: LintConfig) {
+function setup(mods: readonly Mod[], config: LintConfig, knowledge: ScriptKnowledge | null = null) {
   const reporter = new RecordingReporter();
-  const useCase = new LintModsUseCase(new InMemoryModRepository(mods), new FixedConfigRepository(config), reporter);
+  const useCase = new LintModsUseCase(
+    new InMemoryModRepository(mods),
+    new FixedConfigRepository(config),
+    new FixedKnowledgeRepository(knowledge),
+    reporter,
+  );
   return { useCase, reporter };
 }
 
 describe('LintModsUseCase', () => {
   it('reports a clean mod with no errors', async () => {
-    const { useCase, reporter } = setup([cleanMod], { requiredLanguages: ['english'], mods: {} });
+    const { useCase, reporter } = setup([cleanMod], { requiredLanguages: ['english'], mods: {} }, EMPTY_KNOWLEDGE);
 
     const report = await useCase.execute();
 
-    expect(report).toEqual({ results: [{ modName: 'clean', diagnostics: [] }], errorCount: 0, warningCount: 0 });
+    expect(report).toEqual({
+      results: [{ modName: 'clean', diagnostics: [] }],
+      errorCount: 0,
+      warningCount: 0,
+      notes: [],
+    });
     expect(reporter.reports).toEqual([report]);
+  });
+
+  it('skips unknown-keywords with a note when the game docs are unavailable', async () => {
+    const { useCase } = setup([modUsingLegitimacy], { requiredLanguages: ['english'], mods: {} });
+
+    const report = await useCase.execute();
+
+    expect(report.errorCount).toBe(0);
+    expect(report.notes).toEqual(['unknown-keywords skipped: game script docs not found (run script_docs in game)']);
+  });
+
+  it('flags unknown keywords when the game docs are available', async () => {
+    const { useCase } = setup([modUsingLegitimacy], { requiredLanguages: ['english'], mods: {} }, EMPTY_KNOWLEDGE);
+
+    const report = await useCase.execute();
+
+    expect(report.results[0]?.diagnostics.map((diagnostic) => diagnostic.ruleId)).toEqual(['unknown-keywords']);
   });
 
   it('applies the per-mod configuration only to that mod', async () => {
