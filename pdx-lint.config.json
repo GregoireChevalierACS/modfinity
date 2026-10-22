@@ -1,0 +1,14 @@
+{
+  "requiredLanguages": ["english", "french"],
+  "mods": {
+    "travelling_scholar": {
+      "forbiddenEffects": [
+        "add_legitimacy",
+        "add_republican_tradition",
+        "add_devotion",
+        "add_horde_unity",
+        "add_tribal_cohesion"
+      ]
+    }
+  }
+}
