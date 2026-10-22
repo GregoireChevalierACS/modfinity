@@ -15,6 +15,10 @@ coverage/
 *.log
 npm-debug.log*
 
+# Editor settings are machine-specific (absolute paths); recommendations are shared
+.vscode/*
+!.vscode/extensions.json
+
 # OS / editor
 Thumbs.db
 Desktop.ini
