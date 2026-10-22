@@ -57,8 +57,19 @@ Override the default locations with `--docs <dir>` and `--game <dir>`.
 `error.log` is full of vanilla noise. Compare it with a baseline instead of reading it:
 
 ```powershell
-npm run baseline     # after a session WITHOUT mods: saves baselines/error-log-<version>.txt
-npm run compare-log  # after a session WITH mods: lists only the messages missing from the baseline
+npm run baseline     # after a LONG session WITHOUT mods (observe mode, ~15 years): saves baselines/error-log-<version>.txt
+npm run compare-log  # after a session WITH mods: new messages, those mentioning a mod file or key listed first
+```
+
+`compare-log` fails only on messages attributed to a mod; other new messages are reported as likely vanilla noise.
+
+### Save checks
+
+The engine's own `common/tests` are not evaluated in regular (even debug) sessions, so mods are checked on saves instead.
+`pdx-lint.config.json` declares, per mod, variables that must be set on at least one existing country of each listed government type:
+
+```powershell
+npm run check-save   # scans the latest plain-text save (not ironman) and prints the coverage per government type
 ```
 
 It follows a hexagonal architecture, enforced by ESLint: `domain` (parsers, rules) has no dependency;

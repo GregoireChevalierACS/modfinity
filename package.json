@@ -20,6 +20,7 @@
     "lint:mods": "npm run build -w pdx-lint && node tools/pdx-lint/dist/cli.js mods",
     "baseline": "npm run build -w pdx-lint && node tools/pdx-lint/dist/cli.js save-baseline",
     "compare-log": "npm run build -w pdx-lint && node tools/pdx-lint/dist/cli.js compare-log",
+    "check-save": "npm run build -w pdx-lint && node tools/pdx-lint/dist/cli.js check-save",
     "verify": "npm run lint && npm run typecheck && npm test && npm run lint:mods"
   },
   "devDependencies": {

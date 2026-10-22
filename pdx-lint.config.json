@@ -8,6 +8,12 @@
         "add_devotion",
         "add_horde_unity",
         "add_tribal_cohesion"
+      ],
+      "saveChecks": [
+        {
+          "variable": "modfinity_scholar_visited",
+          "requiredGovernments": ["monarchy", "republic", "theocracy", "steppe_horde", "tribe"]
+        }
       ]
     }
   }

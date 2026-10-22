@@ -1,5 +1,6 @@
-import { compareWithBaseline, distinctErrors, type LogComparison } from '../domain/error-log.js';
+import { attributeToMods, compareWithBaseline, distinctErrors, type AttributedErrors } from '../domain/error-log.js';
 import type { BaselineRepository, GameLogs } from '../ports/game-logs.js';
+import type { ModRepository } from '../ports/mod-repository.js';
 
 export interface SavedBaseline {
   readonly gameVersion: string;
@@ -7,7 +8,7 @@ export interface SavedBaseline {
   readonly location: string;
 }
 
-/** To run right after a session played without any mod. */
+/** To run right after a long session played without any mod. */
 export class SaveBaselineUseCase {
   constructor(
     private readonly logs: GameLogs,
@@ -22,15 +23,17 @@ export class SaveBaselineUseCase {
   }
 }
 
-export interface ErrorLogReport extends LogComparison {
+export interface ErrorLogReport extends AttributedErrors {
   readonly gameVersion: string;
+  readonly totalLines: number;
 }
 
-/** Lists the errors of the last session that the vanilla baseline does not explain. */
+/** Lists the errors of the last session that the vanilla baseline does not explain, grouped by mod. */
 export class CompareErrorLogUseCase {
   constructor(
     private readonly logs: GameLogs,
     private readonly baselines: BaselineRepository,
+    private readonly mods: ModRepository,
   ) {}
 
   async execute(): Promise<ErrorLogReport> {
@@ -39,6 +42,9 @@ export class CompareErrorLogUseCase {
     if (baseline === null) {
       throw new Error(`no baseline for game version ${gameVersion}: play a session without mods, then run save-baseline`);
     }
-    return { gameVersion, ...compareWithBaseline(errorLog, baseline) };
+
+    const { totalLines, newErrors } = compareWithBaseline(errorLog, baseline);
+    const mods = await Promise.all((await this.mods.listModNames()).map((name) => this.mods.load(name)));
+    return { gameVersion, totalLines, ...attributeToMods(newErrors, mods) };
   }
 }

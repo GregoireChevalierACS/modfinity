@@ -1,6 +1,6 @@
 ﻿# Country scope.
 
-# Starts the cooldown (20 years) and remembers that a scholar came, for the game tests.
+# Starts the cooldown (20 years) and remembers that a scholar came (read by `pdx-lint check-save`).
 modfinity_scholar_record_visit_effect = {
 	set_variable = {
 		name = modfinity_scholar_cooldown

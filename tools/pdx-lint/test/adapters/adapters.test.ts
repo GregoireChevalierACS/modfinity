@@ -53,16 +53,31 @@ describe('JsonConfigRepository', () => {
     expect(await new JsonConfigRepository(join(root, 'missing.json')).load()).toEqual(DEFAULT_CONFIG);
   });
 
-  it('reads languages and per-mod forbidden effects', async () => {
+  it('reads languages, per-mod forbidden effects and save checks', async () => {
+    const saveChecks = [{ variable: 'visited', requiredGovernments: ['monarchy'] }];
     await createFile(
       'config.json',
-      JSON.stringify({ requiredLanguages: ['english', 'french'], mods: { m: { forbiddenEffects: ['add_devotion'] } } }),
+      JSON.stringify({
+        requiredLanguages: ['english', 'french'],
+        mods: { m: { forbiddenEffects: ['add_devotion'], saveChecks }, n: {} },
+      }),
     );
 
     expect(await new JsonConfigRepository(join(root, 'config.json')).load()).toEqual({
       requiredLanguages: ['english', 'french'],
-      mods: { m: { forbiddenEffects: ['add_devotion'] } },
+      mods: {
+        m: { forbiddenEffects: ['add_devotion'], saveChecks },
+        n: { forbiddenEffects: [], saveChecks: [] },
+      },
     });
+  });
+
+  it('rejects a malformed save check', async () => {
+    await createFile('config.json', JSON.stringify({ mods: { m: { saveChecks: [{ variable: 'x' }] } } }));
+
+    await expect(new JsonConfigRepository(join(root, 'config.json')).load()).rejects.toThrow(
+      "saveChecks[0] must have a 'variable' string and a 'requiredGovernments' string array",
+    );
   });
 
   it('rejects an invalid configuration with an explicit message', async () => {

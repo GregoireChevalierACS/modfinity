@@ -2,7 +2,7 @@
 
 # A scholar only visits countries with some income, and not twice within the cooldown.
 modfinity_scholar_can_visit = {
-	monthly_income_trade_and_tax > 1
+	monthly_income_trade_and_tax > 0
 	NOT = { has_variable = modfinity_scholar_cooldown }
 }
 
