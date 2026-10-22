@@ -1,13 +1,15 @@
 ﻿# Only an on_actions block may be appended to a vanilla on_action:
 # the mod's logic lives in its own, prefixed on_actions.
-monthly_country_pulse = {
+yearly_country_pulse = {
 	on_actions = {
-		modfinity_scholar_debug_monthly_pulse
+		modfinity_scholar_yearly_pulse
 	}
 }
 
-modfinity_scholar_debug_monthly_pulse = {
-	events = {
-		modfinity_scholar_debug.1
+# Once the 20-year cooldown is over, a 20% yearly chance gives about one visit every 25 years.
+modfinity_scholar_yearly_pulse = {
+	random_events = {
+		chance_to_happen = 20
+		100 = modfinity_scholar.1
 	}
 }
