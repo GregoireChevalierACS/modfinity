@@ -62,6 +62,8 @@ npm run compare-log  # after a session WITH mods: new messages, those mentioning
 ```
 
 `compare-log` fails only on messages attributed to a mod; other new messages are reported as likely vanilla noise.
+Vanilla noise depends on what happens in a session, so `baseline` merges each new mod-free session into the existing
+baseline (`node tools/pdx-lint/dist/cli.js save-baseline --replace` starts over).
 
 ### Save checks
 
