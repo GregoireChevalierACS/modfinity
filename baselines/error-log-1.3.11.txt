@@ -1,3 +1,145 @@
+  Error: Event target link 'location' did not get a matching scope type. Expected 'character, pop, combat, siege, market, exploration, work_of_art, holy_site, building, cardinal, town_rights', but got 'location'
+  Error: Event target link 'ruler_or_heir_if_regent' returned an invalid object
+  Error: Event target link 'scope' returned an invalid object
+  Error: Event target link 'scope' returned an unset scope
+  Error: Event target link 'var' returned an unset scope
+  Error: Failed to fetch variable for 'MLO_demands' due to no variables in scope
+  Error: Failed to fetch variable for 'imperial_authority_change' due to not being set
+  Error: Invalid left side during comparison 'var'
+  Error: Undefined event target 'target_country_2'
+  Error: add_casus_belli effect [ Giving out an invalid CB that will expire immediately: events/government/societal_values.txt:1634 ]
+  Error: change_disease_presence effect [ change_disease_presence used in a location that has no disease presence ]
+  Error: destroy_building effect [ Null object! Field: building ]
+  Error: untyped trigger [ Scoped object of type 'country' is not valid (Pays « Pays » (---)) ]
+  Script location: common/laws/02_country_specific.txt:501
+  Script location: common/scriptable_hints/scripted_hints.txt:1000
+  Script location: common/scriptable_hints/scripted_hints.txt:1003
+  Script location: common/scriptable_hints/scripted_hints.txt:1010
+  Script location: common/scriptable_hints/scripted_hints.txt:1013
+  Script location: common/scriptable_hints/scripted_hints.txt:1019
+  Script location: common/scriptable_hints/scripted_hints.txt:1025
+  Script location: common/scriptable_hints/scripted_hints.txt:1036
+  Script location: common/scriptable_hints/scripted_hints.txt:1039
+  Script location: common/scriptable_hints/scripted_hints.txt:108
+  Script location: common/scriptable_hints/scripted_hints.txt:112
+  Script location: common/scriptable_hints/scripted_hints.txt:130
+  Script location: common/scriptable_hints/scripted_hints.txt:134
+  Script location: common/scriptable_hints/scripted_hints.txt:153
+  Script location: common/scriptable_hints/scripted_hints.txt:157
+  Script location: common/scriptable_hints/scripted_hints.txt:176
+  Script location: common/scriptable_hints/scripted_hints.txt:180
+  Script location: common/scriptable_hints/scripted_hints.txt:199
+  Script location: common/scriptable_hints/scripted_hints.txt:2
+  Script location: common/scriptable_hints/scripted_hints.txt:203
+  Script location: common/scriptable_hints/scripted_hints.txt:21
+  Script location: common/scriptable_hints/scripted_hints.txt:222
+  Script location: common/scriptable_hints/scripted_hints.txt:226
+  Script location: common/scriptable_hints/scripted_hints.txt:245
+  Script location: common/scriptable_hints/scripted_hints.txt:285
+  Script location: common/scriptable_hints/scripted_hints.txt:311
+  Script location: common/scriptable_hints/scripted_hints.txt:338
+  Script location: common/scriptable_hints/scripted_hints.txt:357
+  Script location: common/scriptable_hints/scripted_hints.txt:40
+  Script location: common/scriptable_hints/scripted_hints.txt:425
+  Script location: common/scriptable_hints/scripted_hints.txt:457
+  Script location: common/scriptable_hints/scripted_hints.txt:471
+  Script location: common/scriptable_hints/scripted_hints.txt:478
+  Script location: common/scriptable_hints/scripted_hints.txt:485
+  Script location: common/scriptable_hints/scripted_hints.txt:492
+  Script location: common/scriptable_hints/scripted_hints.txt:499
+  Script location: common/scriptable_hints/scripted_hints.txt:506
+  Script location: common/scriptable_hints/scripted_hints.txt:513
+  Script location: common/scriptable_hints/scripted_hints.txt:520
+  Script location: common/scriptable_hints/scripted_hints.txt:531
+  Script location: common/scriptable_hints/scripted_hints.txt:538
+  Script location: common/scriptable_hints/scripted_hints.txt:548
+  Script location: common/scriptable_hints/scripted_hints.txt:559
+  Script location: common/scriptable_hints/scripted_hints.txt:566
+  Script location: common/scriptable_hints/scripted_hints.txt:573
+  Script location: common/scriptable_hints/scripted_hints.txt:583
+  Script location: common/scriptable_hints/scripted_hints.txt:590
+  Script location: common/scriptable_hints/scripted_hints.txt:597
+  Script location: common/scriptable_hints/scripted_hints.txt:60
+  Script location: common/scriptable_hints/scripted_hints.txt:607
+  Script location: common/scriptable_hints/scripted_hints.txt:614
+  Script location: common/scriptable_hints/scripted_hints.txt:621
+  Script location: common/scriptable_hints/scripted_hints.txt:628
+  Script location: common/scriptable_hints/scripted_hints.txt:655
+  Script location: common/scriptable_hints/scripted_hints.txt:658
+  Script location: common/scriptable_hints/scripted_hints.txt:667
+  Script location: common/scriptable_hints/scripted_hints.txt:671
+  Script location: common/scriptable_hints/scripted_hints.txt:682
+  Script location: common/scriptable_hints/scripted_hints.txt:685
+  Script location: common/scriptable_hints/scripted_hints.txt:692
+  Script location: common/scriptable_hints/scripted_hints.txt:695
+  Script location: common/scriptable_hints/scripted_hints.txt:702
+  Script location: common/scriptable_hints/scripted_hints.txt:705
+  Script location: common/scriptable_hints/scripted_hints.txt:712
+  Script location: common/scriptable_hints/scripted_hints.txt:715
+  Script location: common/scriptable_hints/scripted_hints.txt:722
+  Script location: common/scriptable_hints/scripted_hints.txt:725
+  Script location: common/scriptable_hints/scripted_hints.txt:732
+  Script location: common/scriptable_hints/scripted_hints.txt:735
+  Script location: common/scriptable_hints/scripted_hints.txt:742
+  Script location: common/scriptable_hints/scripted_hints.txt:745
+  Script location: common/scriptable_hints/scripted_hints.txt:752
+  Script location: common/scriptable_hints/scripted_hints.txt:755
+  Script location: common/scriptable_hints/scripted_hints.txt:762
+  Script location: common/scriptable_hints/scripted_hints.txt:765
+  Script location: common/scriptable_hints/scripted_hints.txt:772
+  Script location: common/scriptable_hints/scripted_hints.txt:775
+  Script location: common/scriptable_hints/scripted_hints.txt:782
+  Script location: common/scriptable_hints/scripted_hints.txt:785
+  Script location: common/scriptable_hints/scripted_hints.txt:792
+  Script location: common/scriptable_hints/scripted_hints.txt:795
+  Script location: common/scriptable_hints/scripted_hints.txt:803
+  Script location: common/scriptable_hints/scripted_hints.txt:806
+  Script location: common/scriptable_hints/scripted_hints.txt:814
+  Script location: common/scriptable_hints/scripted_hints.txt:817
+  Script location: common/scriptable_hints/scripted_hints.txt:823
+  Script location: common/scriptable_hints/scripted_hints.txt:826
+  Script location: common/scriptable_hints/scripted_hints.txt:833
+  Script location: common/scriptable_hints/scripted_hints.txt:836
+  Script location: common/scriptable_hints/scripted_hints.txt:843
+  Script location: common/scriptable_hints/scripted_hints.txt:846
+  Script location: common/scriptable_hints/scripted_hints.txt:85
+  Script location: common/scriptable_hints/scripted_hints.txt:853
+  Script location: common/scriptable_hints/scripted_hints.txt:856
+  Script location: common/scriptable_hints/scripted_hints.txt:863
+  Script location: common/scriptable_hints/scripted_hints.txt:866
+  Script location: common/scriptable_hints/scripted_hints.txt:873
+  Script location: common/scriptable_hints/scripted_hints.txt:876
+  Script location: common/scriptable_hints/scripted_hints.txt:883
+  Script location: common/scriptable_hints/scripted_hints.txt:886
+  Script location: common/scriptable_hints/scripted_hints.txt:89
+  Script location: common/scriptable_hints/scripted_hints.txt:894
+  Script location: common/scriptable_hints/scripted_hints.txt:897
+  Script location: common/scriptable_hints/scripted_hints.txt:904
+  Script location: common/scriptable_hints/scripted_hints.txt:907
+  Script location: common/scriptable_hints/scripted_hints.txt:916
+  Script location: common/scriptable_hints/scripted_hints.txt:919
+  Script location: common/scriptable_hints/scripted_hints.txt:960
+  Script location: common/scriptable_hints/scripted_hints.txt:963
+  Script location: common/scriptable_hints/scripted_hints.txt:970
+  Script location: common/scriptable_hints/scripted_hints.txt:973
+  Script location: common/scriptable_hints/scripted_hints.txt:980
+  Script location: common/scriptable_hints/scripted_hints.txt:983
+  Script location: common/scriptable_hints/scripted_hints.txt:990
+  Script location: common/scriptable_hints/scripted_hints.txt:993
+  Script location: common/scripted_triggers/war_triggers.txt:33
+  Script location: common/subject_types/appanage.txt:148
+  Script location: common/subject_types/appanage.txt:151
+  Script location: events/disaster/succession_crisis.txt:875
+  Script location: events/government/societal_values.txt:1634
+  Script location: events/hre.txt:979
+  Script location: events/religion/autocephalous_patriarchates.txt:344
+  Script location: events/situations/black_death.txt:130
+  Script location: events/situations/black_death.txt:1548
+  Script location: events/situations/black_death.txt:1627
+  Script location: events/situations/black_death.txt:446
+  Script location: events/volcano_events.txt:247
+[building.cpp:1997]: trying to assign a pop to a yakata in yoshino for MRI, but this pop is already for another country
+[building.cpp:2002]: trying to assign a pop to a shoen in ooita for OTM, but this pop is already for another country
 [country_database.cpp:107]: The following two countries have the same name 'BBD' & 'BRA' = 'Brandebourg'
 [country_database.cpp:107]: The following two countries have the same name 'BMS' & 'MEI' = 'Misnie'
 [country_database.cpp:107]: The following two countries have the same name 'BRM' & 'BRE' = 'Brême'
@@ -5,6 +147,17 @@
 [country_database.cpp:107]: The following two countries have the same name 'SFC' & 'ALS' = 'Strasbourg'
 [country_database.cpp:107]: The following two countries have the same name 'SYE' & 'SPY' = 'Spire'
 [country_database.cpp:107]: The following two countries have the same name 'TLP' & 'TAA' = 'Tlalpan'
+[government.cpp:3578]: Removing invalid bureaucracy 'honorary_titles_bureaucracy' for 'BYZ Byzance' 203 at game start - might want to look into this
+[government.cpp:3578]: Removing invalid bureaucracy 'imperial_senate_bureaucracy' for 'BYZ Byzance' 203 at game start - might want to look into this
+[government.cpp:3578]: Removing invalid bureaucracy 'sixty_books_of_the_basilika_bureaucracy' for 'BYZ Byzance' 203 at game start - might want to look into this
+[government.cpp:3578]: Removing invalid bureaucracy 'themata_bureaucracy' for 'BYZ Byzance' 203 at game start - might want to look into this
+[government.cpp:3578]: Removing invalid bureaucracy 'themata_bureaucracy' for 'TRE Trébizonde' 40 at game start - might want to look into this
+[government.cpp:3612]: Removing invalid reform 'katepanata' for 'BYZ Byzance' 203 at game start - might want to look into this
+[jomini_custom_text.h:107]: Object of type 'country' is not valid for 'country_history'
+[jomini_script_system.cpp:252]: Script system error!
+[jomini_scriptvalue.cpp:1948]: Value of wrong type in 'events/disaster/succession_crisis.txt:875'. Got value of type 'none'
+[jomini_scriptvalue.cpp:1948]: Value of wrong type in 'events/hre.txt:977'. Got value of type 'none'
+[jomini_scriptvalue.cpp:1948]: Value of wrong type in 'events/volcano_events.txt:242'. Got value of type 'none'
 [pdx_arena_allocator.cpp:213]: Arena AudioArena size is too small. Please increase.
 [pdx_data_factory.cpp:1042]: Failed converting statement for 'Multiply_CFixedPoint(RawGoodLocationItem.GetProfit, Location.GetMaxRGOWorkers)'
 [pdx_data_factory.cpp:1063]: Failed to convert statement for argument '0' for call 'Multiply_CFixedPoint' in 'Multiply_CFixedPoint(RawGoodLocationItem.GetProfit, Location.GetMaxRGOWorkers)'
@@ -16,5 +169,10 @@
 [pdx_gui_localize.cpp:182]: Unlocalized text 'MUSIC_PLAYER_OPEN_SETTINGS' at gui/music_player_lateralview.gui:46, either localize it or use the raw_text property instead of text
 [pdx_gui_localize.cpp:182]: Unlocalized text 'OPEN_MUSIC_PLAYER' at gui/panels/right_panel/right_panel.gui:461, either localize it or use the raw_text property instead of text
 [pdx_gui_localize.cpp:302]: gui/expand_raw_goods_lateralview.gui:986 - Failed parsing localized text: PROFIT_EXPAND_RGO_TOOLTIP_TITLE_TEXT
+[pdx_text_formatter.cpp:807]: Unknown formatting tag 't+ je'
+[pdx_text_formatter.cpp:807]: Unknown formatting tag 't+ la'
 [pdxinput_context.cpp:2896]: Could not push the provided stack context. ID: 0
 [tooltips_utils.h:85]: Error building from string ( TYPE = NCoatOfArms::SCoatOfArmsSpriteWrapper, HASH = 1806157250 ).
+common/peace_treaties/scaligeri_peace_treaties.txt:109
+common/scripted_triggers/war_triggers.txt:126
+events/volcano_events.txt:377
