@@ -5,21 +5,27 @@ import type { ModRepository } from '../ports/mod-repository.js';
 export interface SavedBaseline {
   readonly gameVersion: string;
   readonly messageCount: number;
+  /** Messages this session added to the existing baseline. */
+  readonly addedCount: number;
   readonly location: string;
 }
 
-/** To run right after a long session played without any mod. */
+/**
+ * To run right after a session played without any mod. Vanilla noise depends on what happened in the
+ * session, so the baseline accumulates the messages of every such session unless `replace` is set.
+ */
 export class SaveBaselineUseCase {
   constructor(
     private readonly logs: GameLogs,
     private readonly baselines: BaselineRepository,
   ) {}
 
-  async execute(): Promise<SavedBaseline> {
+  async execute({ replace = false } = {}): Promise<SavedBaseline> {
     const [gameVersion, errorLog] = await Promise.all([this.logs.readGameVersion(), this.logs.readErrorLog()]);
-    const messages = distinctErrors(errorLog);
+    const existing = replace ? [] : ((await this.baselines.load(gameVersion)) ?? []);
+    const messages = [...new Set([...existing, ...distinctErrors(errorLog)])].sort();
     const location = await this.baselines.save(gameVersion, messages);
-    return { gameVersion, messageCount: messages.length, location };
+    return { gameVersion, messageCount: messages.length, addedCount: messages.length - existing.length, location };
   }
 }
 

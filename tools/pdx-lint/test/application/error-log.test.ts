@@ -56,8 +56,27 @@ describe('SaveBaselineUseCase', () => {
 
     const result = await new SaveBaselineUseCase(new FakeGameLogs('[10:00:00]a\n[10:00:01]a\n'), baselines).execute();
 
-    expect(result).toEqual({ gameVersion: '1.3.11', messageCount: 1, location: 'memory:1.3.11' });
+    expect(result).toEqual({ gameVersion: '1.3.11', messageCount: 1, addedCount: 1, location: 'memory:1.3.11' });
     expect(baselines.saved.get('1.3.11')).toEqual(['a']);
+  });
+
+  it('merges the session into the existing baseline', async () => {
+    const baselines = new InMemoryBaselineRepository();
+    await baselines.save('1.3.11', ['a', 'c']);
+
+    const result = await new SaveBaselineUseCase(new FakeGameLogs('b\nc\n'), baselines).execute();
+
+    expect(result.addedCount).toBe(1);
+    expect(baselines.saved.get('1.3.11')).toEqual(['a', 'b', 'c']);
+  });
+
+  it('starts over when asked to replace the baseline', async () => {
+    const baselines = new InMemoryBaselineRepository();
+    await baselines.save('1.3.11', ['a']);
+
+    await new SaveBaselineUseCase(new FakeGameLogs('b\n'), baselines).execute({ replace: true });
+
+    expect(baselines.saved.get('1.3.11')).toEqual(['b']);
   });
 });
 

@@ -3,7 +3,7 @@
  * Composition root.
  *
  *   pdx-lint [lint] [modsRoot=mods] [--config pdx-lint.config.json] [--docs <dir>] [--game <dir>]
- *   pdx-lint save-baseline [--logs <dir>] [--baselines baselines]
+ *   pdx-lint save-baseline [--logs <dir>] [--baselines baselines] [--replace]
  *   pdx-lint compare-log   [modsRoot=mods] [--logs <dir>] [--baselines baselines]
  *   pdx-lint check-save    [savePath] [--saves <dir>] [--config pdx-lint.config.json]
  *
@@ -39,6 +39,7 @@ const { values, positionals } = parseArgs({
     logs: { type: 'string', default: join(USER_GAME_DIR, 'logs') },
     saves: { type: 'string', default: join(USER_GAME_DIR, 'save games') },
     baselines: { type: 'string', default: 'baselines' },
+    replace: { type: 'boolean', default: false },
   },
 });
 
@@ -67,8 +68,10 @@ switch (command) {
     break;
   }
   case 'save-baseline': {
-    const saved = await new SaveBaselineUseCase(gameLogs, baselines).execute();
-    write(`Baseline ${saved.gameVersion} saved to ${saved.location} (${saved.messageCount} distinct messages).`);
+    const saved = await new SaveBaselineUseCase(gameLogs, baselines).execute({ replace: values.replace });
+    write(
+      `Baseline ${saved.gameVersion} saved to ${saved.location} (${saved.messageCount} distinct messages, ${saved.addedCount} new).`,
+    );
     break;
   }
   case 'compare-log': {
