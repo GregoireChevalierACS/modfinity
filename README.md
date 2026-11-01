@@ -33,6 +33,21 @@ Link a mod into the game's local mod folder (directory junction, no admin rights
 powershell -ExecutionPolicy Bypass -File .\scripts\link-mod.ps1 -ModName travelling_scholar
 ```
 
+### Promptitude companion
+
+[`tools/promptitude`](tools/promptitude) answers the questions typed in the game's Promptitude window.
+Start it before playing (game launched with `-debug_mode`, mod enabled):
+
+```powershell
+npm run companion                               # default Claude model
+npm run companion -- --model claude-haiku-5-5   # faster and lighter on the subscription
+```
+
+It follows `debug.log`, sends each question to Claude through the Claude Code CLI (`claude -p`, the user's
+subscription; `ANTHROPIC_API_KEY` is ignored on purpose) and writes the answer to the mod's inbox, which the
+game reloads and shows as an event. Answers are delivered one at a time. Set `PROMPTITUDE_CLAUDE` to use
+another `claude` executable than the one shipped with the VS Code extension.
+
 ### pdx-lint
 
 [`tools/pdx-lint`](tools/pdx-lint) statically checks mod files, configured by [`pdx-lint.config.json`](pdx-lint.config.json):
