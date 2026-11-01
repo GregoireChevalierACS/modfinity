@@ -2,6 +2,8 @@
  promptitude_hidden.title: "Promptitude (caché)"
  PROMPTITUDE_TOGGLE: "Promptitude"
  PROMPTITUDE_PLACEHOLDER: "Posez votre question, puis appuyez sur Entrée"
+ PROMPTITUDE_SEND: "Envoyer"
+ PROMPTITUDE_TOGGLE_TOOLTIP: "Poser une question à Claude sur votre partie"
  promptitude_log_state: "PROMPTITUDE|state"
  promptitude_log_loop_started: "PROMPTITUDE|loop_started"
  promptitude_log_delivered: "PROMPTITUDE|delivered"
