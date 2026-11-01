@@ -1,0 +1,10 @@
+﻿# Country scope (the player).
+
+# Messages are numbered; a message is unread while its number is above the last one read.
+# Usage, from the generated inbox: promptitude_is_unread_message = { ID = 3 }
+promptitude_is_unread_message = {
+	OR = {
+		NOT = { has_variable = promptitude_last_message }
+		var:promptitude_last_message < $ID$
+	}
+}

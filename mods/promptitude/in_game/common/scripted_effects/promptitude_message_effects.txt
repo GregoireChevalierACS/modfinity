@@ -1,0 +1,9 @@
+﻿# Country scope (the player).
+
+# Usage, from the generated inbox: promptitude_mark_message_read_effect = { ID = 3 }
+promptitude_mark_message_read_effect = {
+	set_variable = {
+		name = promptitude_last_message
+		value = $ID$
+	}
+}
