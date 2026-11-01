@@ -23,17 +23,24 @@ async function createFile(relativePath: string, content: string): Promise<void> 
 }
 
 describe('FileSystemGameLogs', () => {
-  it('reads the error log and the game version', async () => {
+  it('reads the error log and the game version from debug.log', async () => {
     await createFile('logs/error.log', '[10:00:00]oops\n');
-    await createFile('logs/code_revisions.log', '[11:44:51][setup.cpp:165]: game_branch: u26q2/release/1.3.11\n');
+    await createFile('logs/debug.log', '[16:04:20][application.cpp:1004]: Feeding game version into checksum: 1.4.3\n');
+    await createFile('logs/code_revisions.log', '[16:03:59][setup.cpp:164]: game_branch: ud009/release/next\n');
     const logs = new FileSystemGameLogs(join(root, 'logs'));
 
     expect(await logs.readErrorLog()).toBe('[10:00:00]oops\n');
-    expect(await logs.readGameVersion()).toBe('1.3.11');
+    expect(await logs.readGameVersion()).toBe('1.4.3');
+  });
+
+  it('falls back to a numbered release branch in code_revisions.log', async () => {
+    await createFile('logs/code_revisions.log', '[11:44:51][setup.cpp:165]: game_branch: u26q2/release/1.3.11\n');
+
+    expect(await new FileSystemGameLogs(join(root, 'logs')).readGameVersion()).toBe('1.3.11');
   });
 
   it('fails clearly when the version cannot be read', async () => {
-    await createFile('logs/code_revisions.log', 'nothing useful\n');
+    await createFile('logs/code_revisions.log', 'game_branch: ud009/release/next\n');
 
     await expect(new FileSystemGameLogs(join(root, 'logs')).readGameVersion()).rejects.toThrow(
       'could not read the game version',

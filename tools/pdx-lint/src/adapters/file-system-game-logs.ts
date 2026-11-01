@@ -3,9 +3,12 @@ import { join } from 'node:path';
 
 import type { BaselineRepository, GameLogs } from '../ports/game-logs.js';
 
-const GAME_BRANCH = /game_branch: .*\/release\/(\S+)/;
+/** Written to debug.log at every launch, e.g. "Feeding game version into checksum: 1.4.3". */
+const CHECKSUM_VERSION = /Feeding game version into checksum: (\d+(?:\.\d+)+)/;
+/** Fallback for release builds: "game_branch: u26q2/release/1.3.11" (not "ud009/release/next"). */
+const RELEASE_BRANCH = /game_branch: .*\/release\/(\d+(?:\.\d+)+)/;
 
-/** Reads `<logsDir>/error.log` and the version from `<logsDir>/code_revisions.log`. */
+/** Reads `<logsDir>/error.log`, and the game version from debug.log or code_revisions.log. */
 export class FileSystemGameLogs implements GameLogs {
   constructor(private readonly logsDir: string) {}
 
@@ -14,10 +17,18 @@ export class FileSystemGameLogs implements GameLogs {
   }
 
   async readGameVersion(): Promise<string> {
-    const revisions = await readFile(join(this.logsDir, 'code_revisions.log'), 'utf8');
-    const version = GAME_BRANCH.exec(revisions)?.[1];
-    if (version === undefined) throw new Error('could not read the game version from code_revisions.log');
+    const version =
+      (await this.find('debug.log', CHECKSUM_VERSION)) ?? (await this.find('code_revisions.log', RELEASE_BRANCH));
+    if (version === undefined) throw new Error('could not read the game version from debug.log or code_revisions.log');
     return version;
+  }
+
+  private async find(logName: string, pattern: RegExp): Promise<string | undefined> {
+    try {
+      return pattern.exec(await readFile(join(this.logsDir, logName), 'utf8'))?.[1];
+    } catch {
+      return undefined;
+    }
   }
 }
 
