@@ -1,0 +1,16 @@
+{
+  "name": "promptitude-companion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Companion of the Promptitude mod: answers prompts typed in Europa Universalis V with Claude",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "promptitude": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  }
+}
