@@ -1,0 +1,1 @@
+﻿gui/promptitude.gui = promptitude_panel

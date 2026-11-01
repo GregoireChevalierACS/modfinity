@@ -1,5 +1,7 @@
 ﻿l_english:
  promptitude_hidden.title: "Promptitude (hidden)"
+ PROMPTITUDE_TOGGLE: "Promptitude"
+ PROMPTITUDE_PLACEHOLDER: "Ask your question, then press Enter"
  promptitude_log_state: "PROMPTITUDE|state"
  promptitude_log_loop_started: "PROMPTITUDE|loop_started"
  promptitude_log_delivered: "PROMPTITUDE|delivered"

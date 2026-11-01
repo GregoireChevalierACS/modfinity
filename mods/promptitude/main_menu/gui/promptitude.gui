@@ -1,0 +1,35 @@
+﻿# Prototype P4: typing a prompt inside the game.
+# Pressing Enter runs the console command "promptitude <text>". The command does not exist,
+# but the game writes "Running console command: promptitude <text>" to debug.log,
+# where the companion reads it. The game state is left untouched.
+
+widget = {
+	name = "promptitude_panel"
+	# Scripted widgets need a function for 'visible': this one always returns true.
+	visible = "[EqualTo_CFixedPoint('(CFixedPoint)0', '(CFixedPoint)0')]"
+	size = { 440 80 }
+	parentanchor = bottom|left
+	position = { 20 -240 }
+
+	vbox = {
+		layoutpolicy_horizontal = expanding
+		spacing = 6
+
+		button_regular = {
+			size = { 160 30 }
+			text = "PROMPTITUDE_TOGGLE"
+			onclick = "[GetVariableSystem.Toggle('promptitude_open')]"
+		}
+
+		editbox_single = {
+			name = "promptitude_editbox"
+			visible = "[GetVariableSystem.Exists('promptitude_open')]"
+			size = { 420 30 }
+			onreturnpressed = "[ExecuteConsoleCommand(Concatenate('promptitude ', GetTextFromSelfOrAnyChildEditbox(PdxGuiWidget.Self)))]"
+
+			blockoverride "editbox_label" {
+				text = "PROMPTITUDE_PLACEHOLDER"
+			}
+		}
+	}
+}

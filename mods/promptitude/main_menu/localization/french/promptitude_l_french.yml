@@ -1,5 +1,7 @@
 ﻿l_french:
  promptitude_hidden.title: "Promptitude (caché)"
+ PROMPTITUDE_TOGGLE: "Promptitude"
+ PROMPTITUDE_PLACEHOLDER: "Posez votre question, puis appuyez sur Entrée"
  promptitude_log_state: "PROMPTITUDE|state"
  promptitude_log_loop_started: "PROMPTITUDE|loop_started"
  promptitude_log_delivered: "PROMPTITUDE|delivered"
