@@ -1,0 +1,17 @@
+﻿namespace = promptitude_probe
+
+# Prototype P1: can the mod write the player's state where an outside program can read it?
+promptitude_probe.1 = {
+	type = country_event
+	hidden = yes
+
+	trigger = {
+		is_ai = no
+	}
+
+	immediate = {
+		debug_log = promptitude_log_state
+		debug_log_date = yes
+		debug_log_scopes = no
+	}
+}

@@ -1,0 +1,15 @@
+﻿# Country scope (the player).
+
+# One tick of the player-only daily loop: delivers a pending message, then schedules the next tick.
+# The alive marker expires if ticks stop, so that the monthly pulse restarts the loop.
+promptitude_loop_tick_effect = {
+	set_variable = {
+		name = promptitude_loop_alive
+		days = 3
+	}
+	if = {
+		limit = { promptitude_inbox_has_message = yes }
+		trigger_event_non_silently = { id = promptitude_inbox.1 }
+	}
+	trigger_event_silently = { id = promptitude_loop.2 days = 1 }
+}

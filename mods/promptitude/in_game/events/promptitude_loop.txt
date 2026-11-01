@@ -1,0 +1,31 @@
+﻿namespace = promptitude_loop
+
+# Starts (or restarts) the daily loop, from the monthly pulse.
+promptitude_loop.1 = {
+	type = country_event
+	hidden = yes
+
+	trigger = {
+		is_ai = no
+		NOT = { has_variable = promptitude_loop_alive }
+	}
+
+	immediate = {
+		debug_log = promptitude_log_loop_started
+		promptitude_loop_tick_effect = yes
+	}
+}
+
+# Daily tick, rescheduled by itself.
+promptitude_loop.2 = {
+	type = country_event
+	hidden = yes
+
+	trigger = {
+		is_ai = no
+	}
+
+	immediate = {
+		promptitude_loop_tick_effect = yes
+	}
+}

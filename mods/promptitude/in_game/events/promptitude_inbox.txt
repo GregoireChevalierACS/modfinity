@@ -1,0 +1,27 @@
+﻿namespace = promptitude_inbox
+
+# Shows the message written by the companion in the inbox files
+# (scripted trigger, scripted effect and localization), reloaded while the game runs.
+promptitude_inbox.1 = {
+	type = country_event
+	title = promptitude_inbox.title
+	desc = promptitude_inbox.desc
+	outcome = neutral
+	illustration_tags = {
+		10 = regular
+		10 = interior
+	}
+
+	trigger = {
+		promptitude_inbox_has_message = yes
+	}
+
+	immediate = {
+		debug_log = promptitude_log_delivered
+	}
+
+	option = {
+		name = promptitude_inbox.ok
+		promptitude_inbox_apply_effect = yes
+	}
+}

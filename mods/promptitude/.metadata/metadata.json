@@ -1,0 +1,10 @@
+{
+  "name": "Promptitude",
+  "id": "modfinity_promptitude",
+  "version": "0.0.1",
+  "supported_game_version": "1.*",
+  "short_description": "Ask Claude questions from inside Europa Universalis V and get answers grounded in your game. Prototype.",
+  "tags": ["Events"],
+  "relationships": [],
+  "game_custom_data": {}
+}

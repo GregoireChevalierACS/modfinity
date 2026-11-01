@@ -1,0 +1,14 @@
+﻿# Only an on_actions block may be appended to a vanilla on_action.
+monthly_country_pulse = {
+	on_actions = {
+		promptitude_monthly_pulse
+	}
+}
+
+# Monthly: writes the player's state to debug.log (prototype P1) and restarts the daily loop if it stopped.
+promptitude_monthly_pulse = {
+	events = {
+		promptitude_probe.1
+		promptitude_loop.1
+	}
+}
