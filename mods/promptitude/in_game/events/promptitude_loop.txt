@@ -3,6 +3,7 @@
 # Starts (or restarts) the daily loop, from the monthly pulse.
 promptitude_loop.1 = {
 	type = country_event
+	title = promptitude_hidden.title
 	hidden = yes
 
 	trigger = {
@@ -19,6 +20,7 @@ promptitude_loop.1 = {
 # Daily tick, rescheduled by itself.
 promptitude_loop.2 = {
 	type = country_event
+	title = promptitude_hidden.title
 	hidden = yes
 
 	trigger = {

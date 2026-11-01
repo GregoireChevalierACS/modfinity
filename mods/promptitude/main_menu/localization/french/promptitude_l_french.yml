@@ -1,5 +1,5 @@
 ﻿l_french:
- promptitude_log_state: "PROMPTITUDE|state|[ROOT.GetCountry.GetName]"
- promptitude_log_loop_started: "PROMPTITUDE|loop_started|[ROOT.GetCountry.GetName]"
+ promptitude_hidden.title: "Promptitude (caché)"
+ promptitude_log_state: "PROMPTITUDE|state"
+ promptitude_log_loop_started: "PROMPTITUDE|loop_started"
  promptitude_log_delivered: "PROMPTITUDE|delivered"
- promptitude_log_applied: "PROMPTITUDE|applied"

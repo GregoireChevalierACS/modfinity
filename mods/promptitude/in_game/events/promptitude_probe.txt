@@ -3,12 +3,15 @@
 # Prototype P1: can the mod write the player's state where an outside program can read it?
 promptitude_probe.1 = {
 	type = country_event
+	title = promptitude_hidden.title
 	hidden = yes
 
 	trigger = {
 		is_ai = no
 	}
 
+	# Data functions such as [ROOT.GetCountry.GetName] are unavailable in debug_log:
+	# debug_log_scopes writes the country name and tag on the next line instead.
 	immediate = {
 		debug_log = promptitude_log_state
 		debug_log_date = yes
