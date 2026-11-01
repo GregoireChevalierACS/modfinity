@@ -15,6 +15,7 @@ scripts/   local helper scripts (linking mods into the game's mod folder…)
 | Mod | Description | Status |
 |---|---|---|
 | Travelling Scholar | A generic event for every government type: fund a scholar's research, commission praise of your rulers, or send them away. About one visit every 25 years per country, costs scaled on income. | playtest |
+| Promptitude | Ask Claude questions from inside the game and get answers grounded in your game, through a companion app. | prototype |
 
 ## Development
 
