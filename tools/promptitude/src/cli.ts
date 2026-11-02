@@ -2,7 +2,7 @@
 /**
  * Composition root. Run it while playing, with the Promptitude mod enabled:
  *
- *   promptitude [--mod mods/promptitude] [--log <debug.log>] [--model <model>]
+ *   promptitude [--mod mods/promptitude] [--log <debug.log>] [--game <game dir>] [--language french] [--model <model>]
  */
 import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -11,15 +11,19 @@ import { parseArgs } from 'node:util';
 import { ClaudeCliProvider, findClaudeExecutable } from './adapters/claude-cli-provider.js';
 import { ConsoleReporter } from './adapters/console-reporter.js';
 import { DebugLogSource } from './adapters/debug-log-source.js';
+import { FileSystemGameKnowledge } from './adapters/file-system-game-knowledge.js';
 import { FileSystemModFileWriter } from './adapters/mod-file-writer.js';
 import { CompanionUseCase } from './application/companion.js';
 
 const USER_GAME_DIR = join(homedir(), 'Documents', 'Paradox Interactive', 'Europa Universalis V');
+const GAME_INSTALL_DIR = 'C:/Program Files (x86)/Steam/steamapps/common/Europa Universalis V/game';
 
 const { values } = parseArgs({
   options: {
     mod: { type: 'string', default: resolve('mods', 'promptitude') },
     log: { type: 'string', default: join(USER_GAME_DIR, 'logs', 'debug.log') },
+    game: { type: 'string', default: GAME_INSTALL_DIR },
+    language: { type: 'string', default: 'french' },
     model: { type: 'string' },
   },
 });
@@ -36,6 +40,7 @@ process.on('SIGINT', () => {
 
 await new CompanionUseCase(
   log,
+  new FileSystemGameKnowledge(values.game, values.language),
   new ClaudeCliProvider(values.model === undefined ? { executable } : { executable, model: values.model }),
   new FileSystemModFileWriter(values.mod),
   reporter,

@@ -1,4 +1,10 @@
 import type { ModFile } from '../domain/answer-panel.js';
+import type { KnowledgeCard } from '../domain/knowledge/knowledge-card.js';
+
+/** Knowledge cards built from the game's own definitions. */
+export interface GameKnowledgeSource {
+  load(): Promise<KnowledgeCard[]>;
+}
 
 /** Lines appended to the game's debug.log, as they are written. */
 export interface LogSource {

@@ -2,7 +2,14 @@ import { describe, expect, it } from 'vitest';
 
 import { CompanionUseCase } from '../../src/application/companion.js';
 import type { ModFile } from '../../src/domain/answer-panel.js';
-import type { AnswerProvider, CompanionReporter, LogSource, ModFileWriter } from '../../src/ports/ports.js';
+import type { KnowledgeCard } from '../../src/domain/knowledge/knowledge-card.js';
+import type {
+  AnswerProvider,
+  CompanionReporter,
+  GameKnowledgeSource,
+  LogSource,
+  ModFileWriter,
+} from '../../src/ports/ports.js';
 
 const PROMPT = (text: string) => `[20:49:03][console.cpp:1174]: Running console command: promptitude ${text}`;
 const PROBE = [
@@ -29,6 +36,12 @@ class ScriptedLog implements LogSource {
 
   stop(): void {
     // Finite script: nothing to stop.
+  }
+}
+
+class FixedKnowledge implements GameKnowledgeSource {
+  load(): Promise<KnowledgeCard[]> {
+    return Promise.resolve([{ domain: 'goods', id: 'goods_gold', name: 'Or', facts: 'default_market_price=8' }]);
   }
 }
 
@@ -74,7 +87,7 @@ function setup(past: string[], upcoming: string[], failOn?: string) {
   const provider = new EchoProvider(failOn);
   const panel = new RecordingPanel();
   const reporter = new SilentReporter();
-  const useCase = new CompanionUseCase(new ScriptedLog(past, upcoming), provider, panel, reporter);
+  const useCase = new CompanionUseCase(new ScriptedLog(past, upcoming), new FixedKnowledge(), provider, panel, reporter);
   return { useCase, provider, panel, reporter };
 }
 
@@ -93,6 +106,15 @@ describe('CompanionUseCase', () => {
     await useCase.run();
 
     expect(provider.prompts[0]).toContain('Arborée (tag ARB)');
+  });
+
+  it('grounds the answer in the knowledge cards relevant to the question', async () => {
+    const { useCase, provider } = setup([], [PROMPT('Quel bien vaut le plus cher ?'), PROMPT('Que faire ?')]);
+
+    await useCase.run();
+
+    expect(provider.prompts[0]).toContain('goods_gold (Or): default_market_price=8');
+    expect(provider.prompts[1]).not.toContain('goods_gold');
   });
 
   it('answers every question, in order, without waiting for the game', async () => {

@@ -15,6 +15,17 @@ describe('buildAdvisorPrompt', () => {
     expect(buildAdvisorPrompt('?', EMPTY_CONTEXT)).toContain('inconnu pour l\'instant');
   });
 
+  it('adds the knowledge cards as facts to rely on', () => {
+    const prompt = buildAdvisorPrompt('?', EMPTY_CONTEXT, '- [Biens (goods)] goods_gold (Or): default_market_price=8');
+
+    expect(prompt).toContain('Ce sont des faits exacts');
+    expect(prompt).toContain('goods_gold (Or): default_market_price=8');
+  });
+
+  it('has no knowledge section without cards', () => {
+    expect(buildAdvisorPrompt('?', EMPTY_CONTEXT)).not.toContain('Fiches extraites');
+  });
+
   it('forbids titles that assume a monarchy', () => {
     expect(buildAdvisorPrompt('?', EMPTY_CONTEXT)).toContain('n\'emploie aucun titre');
   });

@@ -8,6 +8,9 @@
   "bin": {
     "promptitude": "dist/cli.js"
   },
+  "dependencies": {
+    "pdx-lint": "0.1.0"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json",
