@@ -13,6 +13,8 @@ describe('parseLogLine', () => {
     expect(parseLogLine('[20:49:03][console.cpp:1174]: Running console command: promptitude ')).toBeNull();
     expect(parseLogLine('[20:49:03][console.cpp:1174]: Running console command: promptitude')).toBeNull();
     expect(parseLogLine('[20:39:18][console.cpp:1174]: Running console command: cash')).toBeNull();
+    // Filler commands sent by the panel to flush debug.log.
+    expect(parseLogLine('[20:49:03][console.cpp:1174]: Running console command: promptitude_flush')).toBeNull();
   });
 
   it('recognizes the state probe and the delivery marker', () => {

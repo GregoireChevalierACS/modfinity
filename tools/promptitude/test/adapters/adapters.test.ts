@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { findClaudeExecutable, parseCliResult } from '../../src/adapters/claude-cli-provider.js';
 import { DebugLogSource } from '../../src/adapters/debug-log-source.js';
-import { ModInbox } from '../../src/adapters/mod-inbox.js';
+import { FileSystemModFileWriter } from '../../src/adapters/mod-file-writer.js';
 
 let root: string;
 
@@ -71,11 +71,11 @@ describe('DebugLogSource', () => {
   });
 });
 
-describe('ModInbox', () => {
+describe('FileSystemModFileWriter', () => {
   it('writes each file in UTF-8 with BOM', async () => {
     await mkdir(join(root, 'in_game'), { recursive: true });
 
-    await new ModInbox(root).write([{ relativePath: 'in_game/a.txt', content: 'é' }]);
+    await new FileSystemModFileWriter(root).write([{ relativePath: 'in_game/a.txt', content: 'é' }]);
 
     expect([...(await readFile(join(root, 'in_game', 'a.txt')))]).toEqual([0xef, 0xbb, 0xbf, 0xc3, 0xa9]);
   });

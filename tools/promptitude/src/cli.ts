@@ -11,7 +11,7 @@ import { parseArgs } from 'node:util';
 import { ClaudeCliProvider, findClaudeExecutable } from './adapters/claude-cli-provider.js';
 import { ConsoleReporter } from './adapters/console-reporter.js';
 import { DebugLogSource } from './adapters/debug-log-source.js';
-import { ModInbox } from './adapters/mod-inbox.js';
+import { FileSystemModFileWriter } from './adapters/mod-file-writer.js';
 import { CompanionUseCase } from './application/companion.js';
 
 const USER_GAME_DIR = join(homedir(), 'Documents', 'Paradox Interactive', 'Europa Universalis V');
@@ -37,6 +37,6 @@ process.on('SIGINT', () => {
 await new CompanionUseCase(
   log,
   new ClaudeCliProvider(values.model === undefined ? { executable } : { executable, model: values.model }),
-  new ModInbox(values.mod),
+  new FileSystemModFileWriter(values.mod),
   reporter,
 ).run();

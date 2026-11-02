@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { CompanionUseCase, DELIVERY_TIMEOUT_MS } from '../../src/application/companion.js';
-import type { InboxFile } from '../../src/domain/inbox.js';
-import type { AnswerProvider, CompanionReporter, Inbox, LogSource } from '../../src/ports/ports.js';
+import { CompanionUseCase } from '../../src/application/companion.js';
+import type { ModFile } from '../../src/domain/answer-panel.js';
+import type { AnswerProvider, CompanionReporter, LogSource, ModFileWriter } from '../../src/ports/ports.js';
 
 const PROMPT = (text: string) => `[20:49:03][console.cpp:1174]: Running console command: promptitude ${text}`;
-const DELIVERED = '[20:48:12][jomini_effect_impl.cpp:479]: events/promptitude_inbox.txt:20: PROMPTITUDE|delivered';
 const PROBE = [
   '[20:40:03][jomini_effect_impl.cpp:479]: events/promptitude_probe.txt:16: PROMPTITUDE|state',
   '[20:40:03][jomini_effect_impl.cpp:2666]: Pays « Arborée » (ARB)',
@@ -45,16 +44,17 @@ class EchoProvider implements AnswerProvider {
   }
 }
 
-class RecordingInbox implements Inbox {
-  readonly writes: (readonly InboxFile[])[] = [];
+class RecordingPanel implements ModFileWriter {
+  readonly writes: (readonly ModFile[])[] = [];
 
-  write(files: readonly InboxFile[]): Promise<void> {
+  write(files: readonly ModFile[]): Promise<void> {
     this.writes.push(files);
     return Promise.resolve();
   }
 
-  descriptions(): string[] {
-    return this.writes.map((files) => /desc: "(.*)"/.exec(files[3]?.content ?? '')?.[1] ?? '');
+  /** French answer text of each write. */
+  answers(): string[] {
+    return this.writes.map((files) => /LAST_ANSWER: "(.*)"/.exec(files[1]?.content ?? '')?.[1] ?? '');
   }
 }
 
@@ -70,21 +70,21 @@ class SilentReporter implements CompanionReporter {
   }
 }
 
-function setup(past: string[], upcoming: string[], { failOn, clock }: { failOn?: string; clock?: () => Date } = {}) {
+function setup(past: string[], upcoming: string[], failOn?: string) {
   const provider = new EchoProvider(failOn);
-  const inbox = new RecordingInbox();
+  const panel = new RecordingPanel();
   const reporter = new SilentReporter();
-  const useCase = new CompanionUseCase(new ScriptedLog(past, upcoming), provider, inbox, reporter, clock);
-  return { useCase, provider, inbox, reporter };
+  const useCase = new CompanionUseCase(new ScriptedLog(past, upcoming), provider, panel, reporter);
+  return { useCase, provider, panel, reporter };
 }
 
 describe('CompanionUseCase', () => {
-  it('answers a prompt typed in game and writes the answer to the inbox', async () => {
-    const { useCase, inbox } = setup([], [PROMPT('Que faire ?')]);
+  it('shows that it is thinking, then the answer', async () => {
+    const { useCase, panel } = setup([], [PROMPT('Que faire ?')]);
 
     await useCase.run();
 
-    expect(inbox.descriptions()).toEqual(['Réponse n°1']);
+    expect(panel.answers()).toEqual(['Réflexion en cours…', 'Réponse n°1']);
   });
 
   it('uses the country found in the log history', async () => {
@@ -95,51 +95,37 @@ describe('CompanionUseCase', () => {
     expect(provider.prompts[0]).toContain('Arborée (tag ARB)');
   });
 
-  it('waits for the previous answer to be shown before writing the next one', async () => {
-    const { useCase, inbox } = setup([], [PROMPT('Première ?'), PROMPT('Seconde ?'), 'noise', DELIVERED, 'noise']);
+  it('answers every question, in order, without waiting for the game', async () => {
+    const { useCase, panel } = setup([], [PROMPT('Première ?'), 'noise', PROMPT('Seconde ?'), PROMPT('Troisième ?')]);
 
     await useCase.run();
 
-    expect(inbox.descriptions()).toEqual(['Réponse n°1', 'Réponse n°2']);
+    expect(panel.answers().filter((answer) => answer.startsWith('Réponse'))).toEqual([
+      'Réponse n°1',
+      'Réponse n°2',
+      'Réponse n°3',
+    ]);
   });
 
-  it('keeps the second answer pending while the first one is not shown', async () => {
-    const { useCase, inbox } = setup([], [PROMPT('Première ?'), PROMPT('Seconde ?'), 'noise']);
-
-    await useCase.run();
-
-    expect(inbox.writes).toHaveLength(1);
-  });
-
-  it('replaces an answer never shown after the delivery timeout', async () => {
-    let now = new Date(Date.UTC(2026, 10, 1, 20, 0));
-    const clock = () => now;
-    const { useCase, inbox } = setup([], [], { clock });
-
-    await useCase.handle(PROMPT('Première ?'));
-    await useCase.handle(PROMPT('Seconde ?'));
-    expect(inbox.writes).toHaveLength(1);
-    now = new Date(now.getTime() + DELIVERY_TIMEOUT_MS);
-    await useCase.handle('noise');
-
-    expect(inbox.writes).toHaveLength(2);
-  });
-
-  it('gives growing message ids', async () => {
-    const { useCase, inbox } = setup([], [PROMPT('A ?'), DELIVERED, PROMPT('B ?')]);
-
-    await useCase.run();
-
-    const ids = inbox.writes.map((files) => Number(/ID = (\d+)/.exec(files[0]?.content ?? '')?.[1]));
-    expect(ids[1]).toBeGreaterThan(ids[0] ?? Infinity);
-  });
-
-  it('reports a failed answer and goes on with the next prompt', async () => {
-    const { useCase, inbox, reporter } = setup([], [PROMPT('casse ?'), PROMPT('Que faire ?')], { failOn: 'casse' });
+  it('shows a failure in the panel and goes on with the next question', async () => {
+    const { useCase, panel, reporter } = setup([], [PROMPT('casse ?'), PROMPT('Que faire ?')], 'casse');
 
     await useCase.run();
 
     expect(reporter.errors).toEqual(['Could not answer "casse ?": quota reached']);
-    expect(inbox.writes).toHaveLength(1);
+    expect(panel.answers()).toEqual([
+      'Réflexion en cours…',
+      'Promptitude n\'a pas pu répondre : quota reached',
+      'Réflexion en cours…',
+      'Réponse n°2',
+    ]);
+  });
+
+  it('ignores lines that are not prompts', async () => {
+    const { useCase, panel } = setup([], ['noise', '[20:39:18][console.cpp:1174]: Running console command: cash']);
+
+    await useCase.run();
+
+    expect(panel.writes).toEqual([]);
   });
 });

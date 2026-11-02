@@ -1,4 +1,4 @@
-import type { InboxFile } from '../domain/inbox.js';
+import type { ModFile } from '../domain/answer-panel.js';
 
 /** Lines appended to the game's debug.log, as they are written. */
 export interface LogSource {
@@ -14,9 +14,9 @@ export interface AnswerProvider {
   answer(prompt: string): Promise<string>;
 }
 
-/** The mod's inbox files. */
-export interface Inbox {
-  write(files: readonly InboxFile[]): Promise<void>;
+/** Files of the mod that the game reloads while it runs. */
+export interface ModFileWriter {
+  write(files: readonly ModFile[]): Promise<void>;
 }
 
 /** What the companion tells the user while it runs. */
@@ -24,5 +24,3 @@ export interface CompanionReporter {
   info(message: string): void;
   error(message: string): void;
 }
-
-export type Clock = () => Date;
