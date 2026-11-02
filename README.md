@@ -44,9 +44,11 @@ npm run companion -- --model claude-haiku-5-5   # faster and lighter on the subs
 ```
 
 It follows `debug.log`, sends each question to Claude through the Claude Code CLI (`claude -p`, the user's
-subscription; `ANTHROPIC_API_KEY` is ignored on purpose) and writes the answer to the mod's inbox, which the
-game reloads and shows as an event. Answers are delivered one at a time. Set `PROMPTITUDE_CLAUDE` to use
-another `claude` executable than the one shipped with the VS Code extension.
+subscription; `ANTHROPIC_API_KEY` is ignored on purpose) and shows the answer in the Promptitude panel by
+rewriting localization files, which the game reloads while it runs. Only localization is rewritten per answer:
+reloading script writes about 9 MB to `debug.log`, which stops growing past ~32 MB, and the companion would
+then stop hearing questions. Set `PROMPTITUDE_CLAUDE` to use another `claude` executable than the one shipped
+with the VS Code extension.
 
 ### pdx-lint
 
