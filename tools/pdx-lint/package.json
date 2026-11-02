@@ -8,6 +8,16 @@
   "bin": {
     "pdx-lint": "dist/cli.js"
   },
+  "exports": {
+    "./paradox-script": {
+      "types": "./dist/domain/paradox-script/index.d.ts",
+      "default": "./dist/domain/paradox-script/index.js"
+    },
+    "./localization": {
+      "types": "./dist/domain/localization/localization-file.d.ts",
+      "default": "./dist/domain/localization/localization-file.js"
+    }
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json",

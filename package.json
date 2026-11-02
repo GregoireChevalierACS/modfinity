@@ -14,8 +14,8 @@
   "scripts": {
     "prepare": "lefthook install",
     "lint": "eslint .",
-    "typecheck": "npm run typecheck --workspaces",
-    "test": "npm run test --workspaces",
+    "typecheck": "npm run build -w pdx-lint && npm run typecheck --workspaces",
+    "test": "npm run build -w pdx-lint && npm run test --workspaces",
     "build": "npm run build --workspaces",
     "lint:mods": "npm run build -w pdx-lint && node tools/pdx-lint/dist/cli.js mods",
     "baseline": "npm run build -w pdx-lint && node tools/pdx-lint/dist/cli.js save-baseline",
