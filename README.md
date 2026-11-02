@@ -43,6 +43,11 @@ npm run companion                               # default Claude model
 npm run companion -- --model claude-haiku-5-5   # faster and lighter on the subscription
 ```
 
+At startup it builds about 1,400 one-line knowledge cards from the installed game (goods, government reforms,
+laws, estate privileges, buildings, with their French names), using the pdx-lint parser. Each question gets only
+the relevant cards (named items first, then families matched by keyword, ranked by relevance, within ~12,000
+characters), so that Claude answers from the game's actual values in a single call.
+
 It follows `debug.log`, sends each question to Claude through the Claude Code CLI (`claude -p`, the user's
 subscription; `ANTHROPIC_API_KEY` is ignored on purpose) and shows the answer in the Promptitude panel by
 rewriting localization files, which the game reloads while it runs. Only localization is rewritten per answer:
